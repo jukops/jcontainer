@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "dnginx.fullname" . }}
+  labels:
+{{ include "dnginx.labels" . | indent 4 }}
+  namespace: japp
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: {{ include "dnginx.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}

@@ -2,7 +2,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "jukpython.name" -}}
+{{- define "jpython.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
@@ -11,7 +11,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "jukpython.fullname" -}}
+{{- define "jpython.fullname" -}}
 {{- if .Values.fullnameOverride -}}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
 {{- else -}}
@@ -27,16 +27,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "jukpython.chart" -}}
+{{- define "jpython.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{/*
 Common labels
 */}}
-{{- define "jukpython.labels" -}}
-app.kubernetes.io/name: {{ include "jukpython.name" . }}
-helm.sh/chart: {{ include "jukpython.chart" . }}
+{{- define "jpython.labels" -}}
+app.kubernetes.io/name: {{ include "jpython.name" . }}
+helm.sh/chart: {{ include "jpython.chart" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
@@ -47,9 +47,9 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "jukpython.serviceAccountName" -}}
+{{- define "jpython.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create -}}
-    {{ default (include "jukpython.fullname" .) .Values.serviceAccount.name }}
+    {{ default (include "jpython.fullname" .) .Values.serviceAccount.name }}
 {{- else -}}
     {{ default "default" .Values.serviceAccount.name }}
 {{- end -}}

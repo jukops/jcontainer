@@ -2,7 +2,7 @@
 replicaCount: 1
 
 image:
-  name: jukpython:0.1
+  name: jukpython:0.2
 
 nameOverride: ""
 fullnameOverride: ""

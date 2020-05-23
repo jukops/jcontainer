@@ -1,23 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "simeplepython.fullname" . }}
+  name: {{ include "jukpython.fullname" . }}
   labels:
-    app: {{ include "simeplepython.name" . }}
+    app: {{ include "jukpython.name" . }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ include "simeplepython.name" . }}
+      app: {{ include "jukpython.name" . }}
   template:
     metadata:
       labels:
-        app: {{ include "simeplepython.name" . }}
+        app: {{ include "jukpython.name" . }}
     spec:
       containers:
-      - name: {{ include "simeplepython.name" . }}
+      - name: {{ include "jukpython.name" . }}
         image: {{ .Values.image.name }}
         ports:
         - containerPort: {{ .Values.service.port }}
-        command: ["python3"]
-        args: ["-m http.server {{ .Values.service.port }}"]
+        command: ["/opt/entrypoint.sh"]
