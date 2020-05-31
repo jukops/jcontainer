@@ -4,6 +4,9 @@ metadata:
   name: {{ include "jpython.fullname" . }}
   labels:
 {{ include "jpython.labels" . | indent 4 }}
+{{- with .Values.labels }}
+  {{- toYaml . | nindent 4 }}
+{{- end }}
   namespace: {{ .Values.namespace }}
 spec:
   replicas: {{ .Values.replicaCount }}
@@ -16,6 +19,7 @@ spec:
       labels:
         app.kubernetes.io/name: {{ include "jpython.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
+        env: test
     spec:
       serviceAccountName: {{ template "jpython.serviceAccountName" . }}
       containers:
@@ -27,3 +31,17 @@ spec:
             - name: http
               containerPort: 8080
               protocol: TCP
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "256Mi"
+            limits:
+              cpu: "1000m"
+              memory: "256Mi"
