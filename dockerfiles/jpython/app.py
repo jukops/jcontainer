@@ -2,25 +2,48 @@
 
 from flask import Flask, request
 from datetime import datetime
+import logging
+
+log_file_path = '/var/log/flask/app.log'
+log_format = '[%(levelname)s] [%(asctime)s]: %(message)s'
+logging.basicConfig(filename = log_file_path,
+                    level = logging.INFO,
+                    format = log_format
+                    )
 
 app = Flask(__name__)
 
-now = datetime.now()
-dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
-
-@app.route("/")
+@app.route("/", methods=['GET'])
 def root_app():
-  print(request.base_url, "is called at", dt_string)
+  user = request.args.get('user')
+
+  if user is None:
+    app.logger.info("no user in request")
+  else:
+    app.logger.info("%s called %s", user, request.base_url)
+
   return "{\"msg\": \"root is called\"}"
 
 @app.route("/auth")
 def auth_app():
-  print(request.base_url, "is called at", dt_string)
+  user = request.args.get('user')
+
+  if user is None:
+    app.logger.info("no user in request")
+  else:
+    app.logger.info("%s called %s", user, request.base_url)
+
   return "{\"msg\": \"auth is called\"}"
 
 @app.route("/user")
 def user_app():
-  print(request.base_url, "is called at", dt_string)
+  user = request.args.get('user')
+
+  if user is None:
+    app.logger.info("no user in request")
+  else:
+    app.logger.info("%s called %s", user, request.base_url)
+    
   return "{\"msg\": \"username is jh\"}"
 
 if __name__ == '__main__':
