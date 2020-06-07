@@ -15,34 +15,46 @@ app = Flask(__name__)
 
 @app.route("/", methods=['GET'])
 def root_app():
-  user = request.args.get('user')
+  try:
+    user = request.args.get('user')
 
-  if user is None:
-    app.logger.info("no user in request")
-  else:
-    app.logger.info("%s called %s", user, request.base_url)
+    if user is None:
+      app.logger.info("no user in request")
+    else:
+      app.logger.info("%s called %s", user, request.base_url)
+  except Exception as ex:
+    app.logger.info("exception is catched")
+    app.logger.info("%s", ex)
 
   return "{\"msg\": \"root is called\"}"
 
 @app.route("/auth")
 def auth_app():
-  user = request.args.get('user')
-
-  if user is None:
-    app.logger.info("no user in request")
-  else:
-    app.logger.info("%s called %s", user, request.base_url)
+  try:
+    user = request.args.get('user')
+  
+    if user is None:
+      app.logger.info("no user in request")
+    else:
+      app.logger.info("%s called %s", user, request.base_url)
+  except Exception as ex:
+    app.logger.info("exception is catched")
+    app.logger.info("%s", ex)
 
   return "{\"msg\": \"auth is called\"}"
 
 @app.route("/user")
 def user_app():
-  user = request.args.get('user')
-
-  if user is None:
-    app.logger.info("no user in request")
-  else:
-    app.logger.info("%s called %s", user, request.base_url)
+  try:
+    user = request.args.get('user')
+  
+    if user is None:
+      app.logger.info("no user in request")
+    else:
+      app.logger.info("%s called %s", user, request.base_url)
+  except Exception as ex:
+    app.logger.info("exception is catched")
+    app.logger.info("%s", ex)
     
   return "{\"msg\": \"username is jh\"}"
 
