@@ -25,7 +25,8 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          command: ["/opt/app/app.py"]
+          command: ["/usr/local/bin/python3"]
+          args: ["/opt/app/app.py"]
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http

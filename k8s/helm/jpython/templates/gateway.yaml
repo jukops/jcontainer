@@ -1,0 +1,33 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: {{ include "jpython.fullname" . }}
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "jpython.juk.io"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ include "jpython.fullname" . }}
+spec:
+  hosts:
+  - "jpython.juk.io"
+  gateways:
+  - {{ include "jpython.fullname" . }}
+  http:
+  - match:
+    - uri:
+        prefix: "/"
+    route:
+    - destination:
+        host: jpython
+        port:
+          number: {{ .Values.service.port }}
