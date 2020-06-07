@@ -13,7 +13,7 @@ RUN chmod 755 $WEB_ROOT_PATH
 RUN chmod 755 $FLASK_LOG_DIR_PATH
 
 RUN apt-get update
-RUN apt-get install -y python3-pip curl
+RUN apt-get install -y python3-pip curl vim
 RUN pip3 install Flask
 
 COPY app.py ${WEB_ROOT_PATH}/app.py
